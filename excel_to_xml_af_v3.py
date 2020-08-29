@@ -35,7 +35,7 @@ except getopt.error as err:
 
 # Change me to input excel file location
 # Reading excel file
-xls_path = os.path.abspath(xls_in)
+xls_path = os.path.abspath(xls_in + ".xlsx")
 xls = pd_lib.ExcelFile(xls_path)
 
 # Loading the ************ALL*********** tab in memory
@@ -43,7 +43,7 @@ ALL_tab = pd_lib.read_excel(xls, 'ALL')
 
 # Change me to input xml file location
 # Reading xml file
-xml_path = os.path.abspath(xml_in)
+xml_path = os.path.abspath(xml_in + ".xml")
 xml_file = xml_lib.parse(xml_path)
 
 #Init not mapped lists
