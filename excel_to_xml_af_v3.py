@@ -1,31 +1,32 @@
 # v1.0 - 27/08/2020 - First draft regular buckets
 # v2.0 - 28/08/2020 - Include not mapped logic + fix residuals
-# v3.0 - 29/08/2020 - Fetch dynamically input files
+# v3.0 - 29/08/2020 - Fetch dynamically input files as args
 ##############################################################################
 # Import required libraries
 import sys, getopt
 import os, time
 import lxml.etree as xml_lib
 import pandas as pd_lib
+import argparse
 
-argv = sys.argv[1:]
-#short_options = ["xls_in:","xml_in:","xml_out:"]
-#short_options = 'xls_in:xml_in:xml_out'
-short_options = 'a:b:c:'
+parser = argparse.ArgumentParser()
+parser.add_argument("-xls_in", help="contains the path to the excel file.")
+parser.add_argument("-xml_in", help="contains the path to the original XML file.")
+parser.add_argument("-xml_out", help="contains the path to the target XML file.")
 
-# Read args and init input files
-try:
-    opts, args = getopt.getopt(argv, short_options, [])
-    for opt, arg in opts:
-        if opt == "-a":
-            xls_in = arg
-        if opt == "-b":
-            xml_in = arg
-        if opt == "-c":
-            xml_out = arg
-except getopt.error as err:
-    print(str(err))
-    sys.exit(2)
+args = parser.parse_args()
+
+if args.xls_in is not None and args.xml_in is not None and args.xml_out is not None:
+    print('I am using the following Excel {}'.format(args.xls_in))
+    print('I am using the following XML as origin {}'.format(args.xml_in))
+    print('I am writing the results in the following XML {}'.format(args.xml_out))
+    xls_in=format(args.xls_in)
+    xml_in=format(args.xml_in)
+    xml_out=format(args.xml_out)
+else:
+    # Prompt user to input path
+    print('At least one of the required args (xls_in, xml_in, xml_out) is missing')
+    sys.exit(1)
 
 #xls_in = "StaticData_Update_Draft.xlsx"
 #xml_in = "bim_matrices_1.6.0.xml"
